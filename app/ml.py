@@ -5,7 +5,7 @@ from sklearn.neighbors import NearestNeighbors
 import pandas as pd
 from joblib import load
 import pickle
-from app.data_dict.city_state_json import city_state_2_id_num
+from app.city_state_json import city_state_2_id_num
 
 router = APIRouter()
 
