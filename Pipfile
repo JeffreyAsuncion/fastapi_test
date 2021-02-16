@@ -12,6 +12,8 @@ fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 sqlalchemy = "*"
 gunicorn = "*"
+joblib = "*"
+sklearn = "*"
 
 [requires]
 python_version = "3"

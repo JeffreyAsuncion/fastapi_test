@@ -5,7 +5,10 @@ import os
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 import sqlalchemy
-from app.predict_json import predict_2021
+from app.data_dict.predict_json import predict_2021
+from app.data_dict.city_state_json import city_state_2_id_num
+
+
 router = APIRouter()
 
 
@@ -26,33 +29,36 @@ async def get_db() -> sqlalchemy.engine.base.Connection:
     finally:
         connection.close()
 
+@router.get('/state_id')
+async def return_city_state(city_state: str):
+    '''Returns the state_id
 
-@router.get('/info')
-async def get_url(connection=Depends(get_db)):
-    """Verify we can connect to the database, 
-    and return the database URL in this format:
-
-    dialect://user:password@host/dbname
-
-    The password will be hidden with ***
-    """
-    url_without_password = repr(connection.engine.url)
-    return {'database_url': url_without_password}
+        for a given city_state, i.e., "Newark, New Jersey"    
+    
+        {"Newark, New Jersey" : 18127 }
+                
+    '''
+    return {"id_num" : city_state_2_id_num[city_state]}
 
 
 @router.get('/predict')
-async def predict_city_state(city_state):
-    '''Returns prediction from prediction table'''
+async def predict_city_state(city_state: str):
+    '''Returns the predicted values for a given state
+
+        for a given city_state, i.e., "Newark, New Jersey"    
+    
+        {
+        "id_num": 17089,
+
+        "population": 283945,
+
+        "crime_rate": 27.4,
+
+        "rental_rate": 1466.89,
+        
+        "walk_score": 79
+        }
+                
+    '''
     return predict_2021[city_state]
 
-
-
-# @router.get('/hello')
-# async def hello():
-#     '''Returns a friendly greeting'''
-#     pass
-
-# @router.get('/hello_user')
-# async def hello_user(name = 'Ike'):
-#     '''Returns a simple greeting '''
-#     return {'username' : f'Hello {name}'}
