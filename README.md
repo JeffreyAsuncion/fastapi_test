@@ -19,6 +19,3 @@ to deploy to aws elastic beanstalk
 this is for referrence original repo
  https://github.com/Lambda-School-Labs/labs-ds-starter/blob/main/Dockerfile
 
- deleted 
- - docker file
- - procfile
