@@ -5,29 +5,12 @@ import os
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 import sqlalchemy
-from app.data_dict.predict_json import predict_2021
-from app.data_dict.city_state_json import city_state_2_id_num
+from app.predict_json import predict_2021
+from app.city_state_json import city_state_2_id_num
 
 
 router = APIRouter()
 
-
-async def get_db() -> sqlalchemy.engine.base.Connection:
-    """Get a SQLAlchemy database connection.
-    
-    Uses this environment variable if it exists:  
-    DATABASE_URL=dialect://user:password@host/dbname
-
-    Otherwise uses a SQLite database for initial local development.
-    """
-    load_dotenv()
-    database_url = os.getenv('DATABASE_URL', default='sqlite:///temporary.db')
-    engine = sqlalchemy.create_engine(database_url)
-    connection = engine.connect()
-    try:
-        yield connection
-    finally:
-        connection.close()
 
 @router.get('/state_id')
 async def return_city_state(city_state: str):
