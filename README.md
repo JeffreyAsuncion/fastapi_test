@@ -14,3 +14,7 @@ to deploy to aws elastic beanstalk
  eb init --platform docker --region us-east-1 group-ja07
  eb create --region us-east-1 group-ja07
  eb open
+
+
+this is for referrence original repo
+ https://github.com/Lambda-School-Labs/labs-ds-starter/blob/main/Dockerfile
